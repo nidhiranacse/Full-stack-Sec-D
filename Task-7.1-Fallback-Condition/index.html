@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 7.1 - Fallback Condition Logic</title>
+</head>
+<body>
+    {% if fruits %}
+        <h3>Fruits</h3>
+        <ul>
+            {% for fruit in fruits %}
+                <li>{{ fruit }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert">No fruits are available.</div>
+    {% endif %}
+
+    {% if students %}
+        <h3>Selected Event Students</h3>
+        <ul>
+            {% for student in students %}
+                <li>{{ student.name }} — {{ student.event }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert">No students were selected.</div>
+    {% endif %}
+</body>
+</html>

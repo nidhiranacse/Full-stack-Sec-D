@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive Todo application with validation">
+<title>Todo App — Lab Sheet 2</title>
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#0f172a,#172554);
+    color:#f8fafc;display:flex;align-items:center;justify-content:center;padding:25px;
+}
+.app{
+    width:min(720px,100%);background:rgba(15,23,42,.94);
+    border:1px solid rgba(255,255,255,.1);border-radius:24px;
+    padding:30px;box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+header h1{margin:0;font-size:2.2rem}
+header p{color:#94a3b8;margin:8px 0 25px}
+.form{display:flex;gap:10px}
+input{
+    flex:1;padding:15px 16px;border-radius:12px;
+    border:1px solid #334155;background:#0b1220;color:white;
+    outline:none;font-size:1rem;
+}
+input:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.12)}
+button{
+    border:0;border-radius:12px;padding:0 20px;
+    font-weight:700;cursor:pointer;transition:.2s;
+}
+.add{background:#4f46e5;color:white}
+.add:hover{transform:translateY(-2px);background:#6366f1}
+.error{min-height:24px;color:#f87171;font-size:.9rem;margin:8px 2px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin:15px 0;color:#94a3b8}
+.clear{background:#1e293b;color:#cbd5e1;padding:9px 13px}
+.clear:hover{background:#334155}
+ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+li{
+    display:flex;align-items:center;gap:12px;padding:14px;
+    border:1px solid rgba(255,255,255,.08);border-radius:14px;
+    background:#111827;
+}
+li.completed .task-text{text-decoration:line-through;color:#64748b}
+.check{width:20px;height:20px;accent-color:#6366f1}
+.task-text{flex:1;word-break:break-word}
+.delete{background:#3f1720;color:#fda4af;padding:8px 11px}
+.delete:hover{background:#5b1b27}
+.empty{text-align:center;color:#64748b;padding:35px}
+@media(max-width:560px){
+    .form{flex-direction:column}
+    .add{height:48px}
+    .app{padding:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+<header>
+    <h1>✓ My Todo List</h1>
+    <p>Add, complete and remove your daily tasks.</p>
+</header>
+
+<form class="form" id="todoForm" novalidate>
+    <input id="todoInput" type="text" maxlength="120"
+           placeholder="Enter a task..." aria-label="Todo task">
+    <button class="add" type="submit">Add Task</button>
+</form>
+
+<div class="error" id="error" role="alert"></div>
+
+<div class="toolbar">
+    <span id="count">0 tasks</span>
+    <button class="clear" id="clearCompleted" type="button">Clear Completed</button>
+</div>
+
+<ul id="todoList"></ul>
+<div class="empty" id="empty">No tasks yet. Add your first task above.</div>
+</div>
+
+<script>
+const form = document.getElementById("todoForm");
+const input = document.getElementById("todoInput");
+const error = document.getElementById("error");
+const list = document.getElementById("todoList");
+const empty = document.getElementById("empty");
+const count = document.getElementById("count");
+const clearCompleted = document.getElementById("clearCompleted");
+
+let todos = [];
+
+function render() {
+    list.innerHTML = "";
+
+    todos.forEach((todo, index) => {
+        const li = document.createElement("li");
+        if (todo.completed) li.classList.add("completed");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "check";
+        checkbox.checked = todo.completed;
+        checkbox.setAttribute("aria-label", "Complete task");
+
+        checkbox.addEventListener("change", () => {
+            todos[index].completed = checkbox.checked;
+            render();
+        });
+
+        const span = document.createElement("span");
+        span.className = "task-text";
+        span.textContent = todo.text;
+
+        const remove = document.createElement("button");
+        remove.className = "delete";
+        remove.type = "button";
+        remove.textContent = "Delete";
+        remove.addEventListener("click", () => {
+            todos.splice(index, 1);
+            render();
+        });
+
+        li.append(checkbox, span, remove);
+        list.appendChild(li);
+    });
+
+    const remaining = todos.filter(todo => !todo.completed).length;
+    count.textContent = `${remaining} ${remaining === 1 ? "task" : "tasks"} remaining`;
+    empty.style.display = todos.length ? "none" : "block";
+}
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const value = input.value.trim();
+
+    if (!value) {
+        error.textContent = "Please enter a task before adding.";
+        input.focus();
+        return;
+    }
+
+    if (value.length < 3) {
+        error.textContent = "Task must contain at least 3 characters.";
+        input.focus();
+        return;
+    }
+
+    if (todos.some(todo => todo.text.toLowerCase() === value.toLowerCase())) {
+        error.textContent = "This task already exists.";
+        input.focus();
+        return;
+    }
+
+    error.textContent = "";
+    todos.push({ text: value, completed: false });
+    input.value = "";
+    render();
+    input.focus();
+});
+
+input.addEventListener("input", () => {
+    error.textContent = "";
+});
+
+clearCompleted.addEventListener("click", () => {
+    todos = todos.filter(todo => !todo.completed);
+    render();
+});
+
+render();
+</script>
+</body>
+</html>

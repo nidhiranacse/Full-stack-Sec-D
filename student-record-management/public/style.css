@@ -1,0 +1,22 @@
+body {
+  font-family: Arial;
+  text-align: center;
+  margin: 30px;
+}
+
+input,
+button {
+  padding: 7px;
+  margin: 4px;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td,
+th {
+  padding: 8px;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Responsive Flexbox photo grid with hover animation">
+<title>Photo Grid — Lab Sheet 2</title>
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;font-family:Arial,Helvetica,sans-serif;
+    background:#0b1120;color:#f8fafc;
+}
+header{text-align:center;padding:55px 20px 30px}
+header h1{font-size:clamp(2.2rem,5vw,4rem);margin:0 0 10px}
+header p{color:#94a3b8;margin:0}
+.gallery{
+    width:min(1200px,92%);margin:25px auto 70px;
+    display:flex;flex-wrap:wrap;gap:20px;
+}
+.card{
+    flex:1 1 calc(33.333% - 20px);
+    min-width:280px;
+    height:360px;
+    position:relative;overflow:hidden;border-radius:20px;
+    background:#111827;border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 14px 40px rgba(0,0,0,.25);
+}
+.card img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .55s ease,filter .55s ease;
+}
+.card:hover img{
+    transform:scale(1.10);
+    filter:brightness(.62) saturate(1.15);
+}
+.overlay{
+    position:absolute;left:0;right:0;bottom:0;padding:25px;
+    background:linear-gradient(transparent,rgba(0,0,0,.9));
+    transform:translateY(35px);transition:.4s;
+}
+.card:hover .overlay{transform:translateY(0)}
+.overlay h2{margin:0 0 5px;font-size:1.35rem}
+.overlay p{margin:0;color:#cbd5e1;font-size:.92rem}
+footer{text-align:center;color:#64748b;padding:25px;border-top:1px solid rgba(255,255,255,.08)}
+@media(max-width:900px){.card{flex-basis:calc(50% - 20px)}}
+@media(max-width:600px){.card{flex-basis:100%;height:330px}}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Explore the World</h1>
+    <p>Responsive Flexbox Photo Grid • Hover to explore</p>
+</header>
+
+<main class="gallery">
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85" alt="Mountain landscape">
+        <div class="overlay"><h2>Mountain Escape</h2><p>Nature • Adventure</p></div>
+    </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85" alt="Tropical beach">
+        <div class="overlay"><h2>Ocean Breeze</h2><p>Travel • Beach</p></div>
+    </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85" alt="Lake and mountains">
+        <div class="overlay"><h2>Quiet Lake</h2><p>Peace • Landscape</p></div>
+    </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=85" alt="Snow covered mountain">
+        <div class="overlay"><h2>Winter Peak</h2><p>Snow • Mountains</p></div>
+    </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1000&q=85" alt="Green forest">
+        <div class="overlay"><h2>Forest Trail</h2><p>Greenery • Nature</p></div>
+    </article>
+
+    <article class="card">
+        <img src="https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=1000&q=85" alt="Scenic mountain road">
+        <div class="overlay"><h2>Open Road</h2><p>Journey • Travel</p></div>
+    </article>
+</main>
+
+<footer>© 2026 Suryakant Upadhyay • Lab Sheet 02</footer>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Django Site{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        nav { display: flex; gap: 20px; margin-bottom: 30px; }
+        nav a { color: #333; text-decoration: none; }
+        nav a.active { font-weight: bold; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="{% if active_page == 'home' %}active{% endif %}" href="/">Home</a>
+        <a class="{% if active_page == 'about' %}active{% endif %}" href="/about/">About Us</a>
+        <a class="{% if active_page == 'contact' %}active{% endif %}" href="/contact/">Contact Us</a>
+    </nav>
+
+    {% block messages %}{% endblock %}
+    {% block content %}{% endblock %}
+</body>
+</html>

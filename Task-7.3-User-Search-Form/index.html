@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 7.3 - User Search</title>
+</head>
+<body>
+    <h2>Search Students</h2>
+
+    <form method="get">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search student"
+            value="{{ query }}"
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    {% if students %}
+        {% for student in students %}
+            <p>{{ student.name }} - {{ student.event }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No students found for "{{ query }}".</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 7.2 - Dynamic Table Sorting</title>
+</head>
+<body>
+    <h2>Selected Event Students</h2>
+
+    <p>
+        <a href="?sort=name">Sort Name A–Z</a> |
+        <a href="?sort=name_desc">Sort Name Z–A</a>
+    </p>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Student Name</th>
+            <th>Selected Event</th>
+        </tr>
+
+        {% for student in students %}
+        <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.event }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

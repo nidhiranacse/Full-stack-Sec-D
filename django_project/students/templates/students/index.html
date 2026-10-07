@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Sheet 07</title>
+</head>
+<body>
+    <h1>Django Templates — Fruits & Selected Event Students</h1>
+
+    {% if fruits %}
+        <h3>Fruits</h3>
+        <ul>
+            {% for fruit in fruits %}
+                <li>{{ fruit }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert">No fruits are available.</div>
+    {% endif %}
+
+    {% if students %}
+        <h3>Selected Event Students</h3>
+
+        <form method="get">
+            <input type="text" name="q" placeholder="Search student" value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <p>
+            <a href="?sort=name{% if query %}&q={{ query }}{% endif %}">Sort Name A–Z</a> |
+            <a href="?sort=name_desc{% if query %}&q={{ query }}{% endif %}">Sort Name Z–A</a>
+        </p>
+
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Student Name</th>
+                <th>Selected Event</th>
+            </tr>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.event }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert">No students were selected.</div>
+        {% if query %}
+            <p>No students found for "{{ query }}".</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
