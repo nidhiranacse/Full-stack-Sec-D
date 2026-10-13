@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title|default:"Enterprise Portal" }}{% endblock %} | Lab Sheet 08</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="app-body">
+    <!-- ================================================================= -->
+    <!-- MASTER BLUEPRINT: Shared Main Header & Navigation                 -->
+    <!-- ================================================================= -->
+    <header class="master-header">
+        <div class="header-inner">
+            <a href="{% url 'home' %}" class="brand-logo">
+                <span class="brand-icon">🏛️</span>
+                <span class="brand-title">ApexCore Portal</span>
+            </a>
+
+            <!-- Task 8.1: Programmatic Navigation Markers with Active Utility Highlights -->
+            <nav class="master-nav" aria-label="Main Navigation">
+                <a 
+                    href="{% url 'home' %}" 
+                    class="nav-link {% if active_nav == 'home' %}nav-link-active{% endif %}"
+                >
+                    <span>🏠 Home</span>
+                </a>
+                <a 
+                    href="{% url 'about' %}" 
+                    class="nav-link {% if active_nav == 'about' %}nav-link-active{% endif %}"
+                >
+                    <span>👥 About Us</span>
+                </a>
+                <a 
+                    href="{% url 'contact' %}" 
+                    class="nav-link {% if active_nav == 'contact' %}nav-link-active{% endif %}"
+                >
+                    <span>✉️ Contact Us</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================================================================= -->
+    <!-- Task 8.2: Inherited Persistent User Message Feedback Box Hook    -->
+    <!-- ================================================================= -->
+    {% block messages_hook %}
+        {% if messages %}
+            <div class="messages-container" id="feedback-messages">
+                {% for message in messages %}
+                    <div class="message-card message-{{ message.tags|default:'info' }}">
+                        <div class="message-content">
+                            <span class="message-icon">
+                                {% if message.tags == 'success' %}✅
+                                {% elif message.tags == 'error' %}❌
+                                {% elif message.tags == 'warning' %}⚠️
+                                {% else %}ℹ️{% endif %}
+                            </span>
+                            <div class="message-text">
+                                <strong>System Notification:</strong> {{ message }}
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close-msg" onclick="this.parentElement.remove()">✕</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endblock messages_hook %}
+
+    <!-- ================================================================= -->
+    <!-- Specialized View Content Block Override                          -->
+    <!-- ================================================================= -->
+    <main class="master-content">
+        {% block content %}
+            <!-- Specialized views inherit and override this block -->
+        {% endblock content %}
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- Shared Modular Footer Blueprint                                  -->
+    <!-- ================================================================= -->
+    <footer class="master-footer">
+        <div class="footer-inner">
+            <p>© 2026 ApexCore Portal. Lab Sheet 08: Template Inheritance Blueprints & Modular UI Engineering.</p>
+            <p class="footer-sub">Standardized Master Template Layout Blueprint with Django Block Overrides</p>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <span class="pill-badge">Specialized View: About Us</span>
+        <h2>About ApexCore Infrastructure</h2>
+        <p class="subtext">
+            Enterprise software design principles leveraging Django template inheritance,
+            DRY principles, and decoupled presentation tiers.
+        </p>
+    </div>
+
+    <div class="about-grid">
+        <div class="about-card">
+            <h3>🏛️ Design Philosophy</h3>
+            <p>
+                The Don't Repeat Yourself (DRY) principle dictates that common presentation elements—such as
+                header anchors, navigation bars, and messaging containers—must be isolated into reusable base blueprints.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <h3>⚙️ Dynamic Programmatic Markers (Task 8.1)</h3>
+            <p>
+                Rather than hard-coding classes or parsing URLs via complex client-side regex, our views pass
+                explicit contextual markers (<code>active_nav: 'about'</code>), allowing the templating engine to apply
+                the active state directly upon server-side compilation.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <h3>📑 Logging & Verification Pathways (Task 8.3)</h3>
+            <p>
+                Feedback parameters received via the Contact Us interface are sanitized by Django's form processing
+                engine and forwarded directly into standard server output logs (<code>server.log</code>).
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

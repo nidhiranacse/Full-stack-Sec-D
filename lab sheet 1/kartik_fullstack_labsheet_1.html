@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Accessibility and responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Kartik Sharma - Semantic HTML Resume, Navigation Menu and Web Catalog">
+
+    <title>Kartik Sharma | HTML Lab Sheet 01</title>
+
+    <style>
+        /* General Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f6f8;
+            color: #222;
+        }
+
+        /* Header */
+        header {
+            background-color: #1f2937;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 5px;
+        }
+
+        /* Navigation */
+        nav {
+            margin-top: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: white;
+            background-color: #374151;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            background-color: #2563eb;
+            outline: 3px solid #93c5fd;
+        }
+
+        /* Nested Menu */
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #374151;
+            min-width: 180px;
+            padding: 5px;
+            z-index: 10;
+        }
+
+        nav ul li:hover > ul,
+        nav ul li:focus-within > ul {
+            display: block;
+        }
+
+        nav ul ul li {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            background-color: white;
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            color: #1d4ed8;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1d4ed8;
+            padding-bottom: 5px;
+        }
+
+        /* Skills */
+        .skills {
+            padding-left: 20px;
+        }
+
+        .skills li {
+            margin: 5px 0;
+        }
+
+        /* Catalog */
+        .catalog-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 5px solid #2563eb;
+            background-color: #f8fafc;
+        }
+
+        dt {
+            font-weight: bold;
+            color: #1d4ed8;
+            margin-top: 8px;
+        }
+
+        dd {
+            margin-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* Contact */
+        address {
+            font-style: normal;
+        }
+
+        address a {
+            color: #1d4ed8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            nav ul ul {
+                position: static;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav a {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TASK 1.1 : SEMANTIC HTML RESUME
+         ===================================================== -->
+
+    <header id="home">
+
+        <h1>Kartik Sharma</h1>
+
+        <p>B.Tech Computer Science Student</p>
+
+        <p>
+            Welcome to my semantic HTML resume and web catalog.
+        </p>
+
+        <!-- =================================================
+             TASK 1.2 : NESTED NAVIGATION MENU
+             ================================================= -->
+
+        <nav aria-label="Main Navigation">
+
+            <ul>
+
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+
+                <li>
+                    <a href="#about">About</a>
+                </li>
+
+                <li>
+                    <a href="#education">Education</a>
+                </li>
+
+                <li>
+                    <a href="#skills">Skills</a>
+                </li>
+
+                <li>
+                    <a href="#catalog">Catalog</a>
+
+                    <!-- Nested Navigation Menu -->
+                    <ul>
+
+                        <li>
+                            <a href="#web-development">
+                                Web Development
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#programming">
+                                Programming
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#ai">
+                                Artificial Intelligence
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+
+                <!-- Absolute Path External Links -->
+                <li>
+                    <a href="https://www.google.com"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Google
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.github.com"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        GitHub
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- =================================================
+             TASK 1.1 : ABOUT SECTION
+             ================================================= -->
+
+        <section id="about">
+
+            <h2>About Me</h2>
+
+            <p>
+                I am a B.Tech Computer Science student interested in
+                web development, programming and artificial intelligence.
+                I enjoy learning new technologies and developing
+                practical web-based applications.
+            </p>
+
+        </section>
+
+
+        <!-- Education Section -->
+
+        <section id="education">
+
+            <h2>Education</h2>
+
+            <article>
+
+                <h3>Bachelor of Technology</h3>
+
+                <p>
+                    <strong>Branch:</strong>
+                    Computer Science Engineering
+                </p>
+
+                <p>
+                    <strong>Duration:</strong>
+                    2023 - Present
+                </p>
+
+            </article>
+
+        </section>
+
+
+        <!-- Skills Section -->
+
+        <section id="skills">
+
+            <h2>Skills</h2>
+
+            <ul class="skills">
+
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>Artificial Intelligence</li>
+                <li>Web Development</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =================================================
+             TASK 1.3 : WEB CATALOG USING DL, DT AND DD
+             ================================================= -->
+
+        <section id="catalog">
+
+            <h2>Web Technology Catalog</h2>
+
+            <!-- Catalog Item 1 -->
+
+            <article class="catalog-item"
+                     id="web-development">
+
+                <h3>Web Development</h3>
+
+                <dl>
+
+                    <dt>HTML5</dt>
+
+                    <dd>
+                        HTML5 is a markup language used to structure
+                        and present content on web pages.
+                    </dd>
+
+                    <dt>CSS3</dt>
+
+                    <dd>
+                        CSS3 is used to style web pages, including
+                        colors, layouts, fonts and responsive designs.
+                    </dd>
+
+                </dl>
+
+            </article>
+
+
+            <!-- Catalog Item 2 -->
+
+            <article class="catalog-item"
+                     id="programming">
+
+                <h3>Programming</h3>
+
+                <dl>
+
+                    <dt>Python</dt>
+
+                    <dd>
+                        Python is a high-level programming language
+                        widely used for software development,
+                        automation and data science.
+                    </dd>
+
+                    <dt>JavaScript</dt>
+
+                    <dd>
+                        JavaScript is a scripting language used to
+                        create interactive and dynamic web pages.
+                    </dd>
+
+                </dl>
+
+            </article>
+
+
+            <!-- Catalog Item 3 -->
+
+            <article class="catalog-item"
+                     id="ai">
+
+                <h3>Artificial Intelligence</h3>
+
+                <dl>
+
+                    <dt>Machine Learning</dt>
+
+                    <dd>
+                        Machine Learning allows computer systems to
+                        learn patterns from data and make predictions.
+                    </dd>
+
+                    <dt>Generative AI</dt>
+
+                    <dd>
+                        Generative AI is a technology that can create
+                        text, images, code and other types of content.
+                    </dd>
+
+                </dl>
+
+            </article>
+
+        </section>
+
+
+        <!-- =================================================
+             TASK 1.2 : EXTERNAL RESOURCE LINKS
+             ================================================= -->
+
+        <section id="resources">
+
+            <h2>External Resources</h2>
+
+            <p>
+                The following links use absolute URLs to external
+                web resources:
+            </p>
+
+            <ul>
+
+                <li>
+                    <a href="https://developer.mozilla.org/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        MDN Web Docs
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.w3.org/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        W3C
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.github.com/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        GitHub
+                    </a>
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- Contact Section -->
+
+        <section id="contact">
+
+            <h2>Contact</h2>
+
+            <address>
+
+                <p>
+                    <strong>Email:</strong>
+                    <a href="mailto:kartik@example.com">
+                        kartik@example.com
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Phone:</strong>
+                    +91-XXXXXXXXXX
+                </p>
+
+            </address>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer>
+
+        <p>
+            &copy; 2026 Kartik Sharma.
+            All Rights Reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

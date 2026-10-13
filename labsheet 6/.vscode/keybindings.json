@@ -1,0 +1,26 @@
+[
+  {
+    "// Task 6.2": "Custom shortcut to format Python document with Black PEP8",
+    "key": "ctrl+shift+i",
+    "command": "editor.action.formatDocument",
+    "when": "editorTextFocus && editorLangId == 'python'"
+  },
+  {
+    "// Task 6.2": "Custom shortcut to trigger Flake8 PEP8 Linting Task",
+    "key": "ctrl+alt+l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "PEP8: Run Flake8 Linter"
+  },
+  {
+    "// Task 6.2": "Custom shortcut to launch Django development server",
+    "key": "ctrl+alt+d",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Django: Run Server"
+  },
+  {
+    "// Task 6.2": "Custom shortcut to run Automated Deployment Check",
+    "key": "ctrl+alt+r",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Deployment: Run Automated Check"
+  }
+]

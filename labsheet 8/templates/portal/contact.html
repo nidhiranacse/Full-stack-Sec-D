@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-container">
+    <div class="page-header text-center">
+        <span class="pill-badge">Specialized View: Contact Us (Task 8.3)</span>
+        <h2>Contact Us & Feedback Verification</h2>
+        <p class="subtext">
+            Submit verified feedback parameters to trigger server logging and persistent feedback alerts.
+        </p>
+    </div>
+
+    <div class="contact-layout">
+        <!-- Contact Form Card -->
+        <div class="contact-form-card">
+            <h3>✉️ Dispatch Feedback Parameter</h3>
+            <p class="card-hint">
+                All parameters submitted below are sanitized by Django's form controller and written directly
+                to <code>server.log</code>.
+            </p>
+
+            <form method="POST" action="{% url 'contact' %}" novalidate class="contact-form">
+                {% csrf_token %}
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="{{ form.full_name.id_for_label }}">
+                        {{ form.full_name.label }} <span class="req">*</span>
+                    </label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                        <div class="field-error">{{ form.full_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">
+                        {{ form.email.label }} <span class="req">*</span>
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="field-error">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Department -->
+                <div class="form-group">
+                    <label for="{{ form.department.id_for_label }}">
+                        {{ form.department.label }} <span class="req">*</span>
+                    </label>
+                    {{ form.department }}
+                    {% if form.department.errors %}
+                        <div class="field-error">{{ form.department.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Subject -->
+                <div class="form-group">
+                    <label for="{{ form.subject.id_for_label }}">
+                        {{ form.subject.label }} <span class="req">*</span>
+                    </label>
+                    {{ form.subject }}
+                    {% if form.subject.errors %}
+                        <div class="field-error">{{ form.subject.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Message Body -->
+                <div class="form-group">
+                    <label for="{{ form.message.id_for_label }}">
+                        {{ form.message.label }} <span class="req">*</span>
+                    </label>
+                    {{ form.message }}
+                    {% if form.message.errors %}
+                        <div class="field-error">{{ form.message.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-submit">
+                    Forward Verified Feedback to Server Logs →
+                </button>
+            </form>
+        </div>
+
+        <!-- System Audit Log Explanation Card -->
+        <div class="audit-info-card">
+            <h3>🛡️ Task 8.3 System Verification Specs</h3>
+            <p>
+                When you click submit, the view triggers:
+            </p>
+            <div class="code-box">
+                <code>logger.info("[SYSTEM AUDIT] Client: '{full_name}' &lt;{email}&gt; | Payload: {message}")</code>
+            </div>
+
+            <div class="audit-feature-list">
+                <div class="audit-item">
+                    <span class="audit-icon">📋</span>
+                    <div>
+                        <strong>Persistent Logging Stream:</strong>
+                        <p>Output captured in <code>labsheet-8-template-inheritance/server.log</code> and terminal console.</p>
+                    </div>
+                </div>
+
+                <div class="audit-item">
+                    <span class="audit-icon">🔔</span>
+                    <div>
+                        <strong>Task 8.2 Feedback Alerts:</strong>
+                        <p>Invokes <code>messages.success()</code> dispatched through the master blueprint hook.</p>
+                    </div>
+                </div>
+
+                <div class="audit-item">
+                    <span class="audit-icon">🔒</span>
+                    <div>
+                        <strong>Form Sanitation:</strong>
+                        <p>Protected by CSRF tokens and Django field cleansers before server writing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

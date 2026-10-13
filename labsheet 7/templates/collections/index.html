@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Top Introduction & Controller Bar -->
+    <div class="dashboard-header-card">
+        <div>
+            <h2>Data Collection & Matrix Explorer</h2>
+            <p class="subtitle">
+                Demonstrates model array mappings, fallback condition filters <code>{% templatetag openblock %} if {% templatetag closeblock %}</code>,
+                dynamic table sorting, and backend search request processing.
+            </p>
+        </div>
+
+        <!-- Task 8.3 / 7.3: User Search Input Form -->
+        <form method="GET" action="{% url 'collections-dashboard' %}" class="search-form">
+            {% if current_sort %}
+                <input type="hidden" name="sort" value="{{ current_sort }}">
+                <input type="hidden" name="order" value="{{ current_order }}">
+            {% endif %}
+            <div class="search-input-group">
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="{{ search_query }}" 
+                    placeholder="Search by name, category, student ID, or event..." 
+                    class="search-input"
+                >
+                <button type="submit" class="btn btn-primary">Search Matrix</button>
+                {% if search_query %}
+                    <a href="{% url 'collections-dashboard' %}" class="btn btn-outline">Clear</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Fallback Condition Logic Simulation Bar -->
+    <div class="simulation-bar">
+        <span class="sim-label">🧪 Test Fallback Filters (Task 7.1):</span>
+        <a href="?simulate_empty=fruits{% if search_query %}&q={{ search_query }}{% endif %}" class="sim-pill {% if simulate_empty == 'fruits' %}active{% endif %}">
+            Simulate Empty Fruits
+        </a>
+        <a href="?simulate_empty=students{% if search_query %}&q={{ search_query }}{% endif %}" class="sim-pill {% if simulate_empty == 'students' %}active{% endif %}">
+            Simulate Empty Students
+        </a>
+        <a href="?simulate_empty=all" class="sim-pill {% if simulate_empty == 'all' %}active{% endif %}">
+            Simulate All Empty
+        </a>
+        <a href="{% url 'collections-dashboard' %}" class="sim-pill reset">
+            Normal View
+        </a>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 1: Unordered Item Matrix (Fruits Collection)                 -->
+    <!-- ==================================================================== -->
+    <section class="section-card">
+        <div class="section-title-row">
+            <div>
+                <h3>🍎 Unordered Item Matrix: Fresh Harvest Fruits</h3>
+                <span class="section-desc">Mapping unstructured model records into a flexible responsive grid matrix</span>
+            </div>
+            <span class="count-badge">{{ total_fruits }} Items Found</span>
+        </div>
+
+        <!-- Task 7.1: Robust Fallback Condition Logic Filters ({% if %}) -->
+        {% if fruits %}
+            <div class="matrix-grid">
+                {% for fruit in fruits %}
+                    <div class="matrix-card">
+                        <div class="matrix-card-header">
+                            <span class="fruit-category">{{ fruit.category }}</span>
+                            {% if fruit.in_stock %}
+                                <span class="stock-pill in-stock">In Stock</span>
+                            {% else %}
+                                <span class="stock-pill out-of-stock">Out of Stock</span>
+                            {% endif %}
+                        </div>
+                        <h4 class="fruit-name">{{ fruit.name }}</h4>
+                        <div class="fruit-detail">
+                            <strong>Season:</strong> {{ fruit.season }}
+                        </div>
+                        <div class="fruit-benefit">
+                            <span class="benefit-icon">💡</span>
+                            <span>{{ fruit.nutritional_benefit }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Task 7.1: Robust Fallback Condition Alert Box -->
+            <div class="alert-box alert-warning">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <h4>No Fruit Records Available (Array Arrived Empty)</h4>
+                    <p>
+                        The backend returned an empty array collection for the Fruits matrix.
+                        {% if search_query %}
+                            No matches were found for your search term <strong>"{{ search_query }}"</strong>.
+                        {% elif simulate_empty == 'fruits' or simulate_empty == 'all' %}
+                            (Simulation Mode Active: Fallback condition logic triggered successfully).
+                        {% else %}
+                            Please populate records in the database.
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'collections-dashboard' %}" class="alert-action">Return to Full Matrix</a>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 2: Ordered Indices (Selected Event Students)                 -->
+    <!-- ==================================================================== -->
+    <section class="section-card">
+        <div class="section-title-row">
+            <div>
+                <h3>🎓 Ordered Indices: Selected Event Students</h3>
+                <span class="section-desc">Indexed participants sorted dynamically by field properties</span>
+            </div>
+            <span class="count-badge">{{ total_students }} Students</span>
+        </div>
+
+        <!-- Task 7.1: Fallback Condition Filter for Students -->
+        {% if students %}
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <!-- Task 7.2 (8.2): Dynamic Sorting Headers -->
+                            <th>
+                                <a href="?sort=registration_rank&order={% if current_sort == 'registration_rank' %}{{ next_order }}{% else %}asc{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="sort-link">
+                                    Priority Rank
+                                    {% if current_sort == 'registration_rank' %}
+                                        <span class="sort-arrow">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=student_id&order={% if current_sort == 'student_id' %}{{ next_order }}{% else %}asc{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="sort-link">
+                                    Student ID
+                                    {% if current_sort == 'student_id' %}
+                                        <span class="sort-arrow">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=name&order={% if current_sort == 'name' %}{{ next_order }}{% else %}asc{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="sort-link">
+                                    Student Name
+                                    {% if current_sort == 'name' %}
+                                        <span class="sort-arrow">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=event_name&order={% if current_sort == 'event_name' %}{{ next_order }}{% else %}asc{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="sort-link">
+                                    Assigned Event
+                                    {% if current_sort == 'event_name' %}
+                                        <span class="sort-arrow">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=score&order={% if current_sort == 'score' %}{{ next_order }}{% else %}desc{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="sort-link">
+                                    Qualification Score
+                                    {% if current_sort == 'score' %}
+                                        <span class="sort-arrow">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <th>Admission Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>
+                                    <span class="rank-badge">#{{ student.registration_rank }}</span>
+                                </td>
+                                <td><code>{{ student.student_id }}</code></td>
+                                <td class="student-name-cell">
+                                    <strong>{{ student.name }}</strong>
+                                    <small>{{ student.email }}</small>
+                                </td>
+                                <td>{{ student.event_name }}</td>
+                                <td>
+                                    <strong class="score-text">{{ student.score }}%</strong>
+                                </td>
+                                <td>
+                                    <span class="status-tag status-{{ student.status|lower }}">
+                                        {{ student.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <!-- Task 7.1: Robust Fallback Alert Box for Empty Student Table -->
+            <div class="alert-box alert-warning">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <h4>No Student Records Found in Ordered Index</h4>
+                    <p>
+                        The backend returned an empty array for Selected Event Students.
+                        {% if search_query %}
+                            No participants match the filter query <strong>"{{ search_query }}"</strong>.
+                        {% elif simulate_empty == 'students' or simulate_empty == 'all' %}
+                            (Simulation Mode Active: Fallback condition logic triggered successfully).
+                        {% else %}
+                            No students are registered for this event cycle yet.
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'collections-dashboard' %}" class="alert-action">Clear Filters & View All</a>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

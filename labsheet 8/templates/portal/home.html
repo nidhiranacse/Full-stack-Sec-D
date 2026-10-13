@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-container">
+    <!-- Hero Banner Component -->
+    <section class="hero-block">
+        <span class="pill-badge">Specialized View: Home Blueprint</span>
+        <h1 class="hero-heading">Modular UI Engineering & Template Inheritance</h1>
+        <p class="hero-subtext">
+            Demonstrating Django's hierarchical block override system, shared layout blueprints,
+            and contextual navigation utility highlighting.
+        </p>
+        <div class="hero-buttons">
+            <a href="{% url 'contact' %}" class="btn btn-primary">
+                Submit System Feedback →
+            </a>
+            <a href="{% url 'about' %}" class="btn btn-outline">
+                Read About Us
+            </a>
+        </div>
+    </section>
+
+    <!-- Architecture Features -->
+    <section class="portal-grid">
+        <div class="card-item">
+            <div class="card-icon">📐</div>
+            <h3>Master Blueprint Layout</h3>
+            <p>
+                Centralized <code>templates/base.html</code> defines global document headers, responsive navigation
+                menus, persistent alert boxes, and footer blocks.
+            </p>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">🎯</div>
+            <h3>Active Utility Highlighting</h3>
+            <p>
+                Task 8.1: Programmatic context markers (<code>active_nav: 'home'</code>) dynamically inject CSS structural
+                highlights to reflect user location.
+            </p>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">🔔</div>
+            <h3>Persistent Notification Hooks</h3>
+            <p>
+                Task 8.2: <code>{% templatetag openblock %} block messages_hook {% templatetag closeblock %}</code> guarantees standardized alert banners across all inherited child views.
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock content %}
