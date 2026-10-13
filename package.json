@@ -1,0 +1,17 @@
+{
+  "name": "jwt-auth-api",
+  "version": "1.0.0",
+  "description": "Practical B1: JWT Authentication API using Node.js and Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["jwt", "express", "authentication", "nodejs"],
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

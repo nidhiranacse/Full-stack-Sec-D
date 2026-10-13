@@ -1,0 +1,63 @@
+### Use this file with the "REST Client" extension in VS Code.
+### Click "Send Request" above each request, from top to bottom.
+
+@baseUrl = http://localhost:3000
+
+### 1. Register (expect 201)
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "secret123"
+}
+
+### 2. Register again with the same username (expect 409)
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "secret123"
+}
+
+### 3. Register with a short password (expect 400)
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "bob",
+  "password": "123"
+}
+
+### 4. Login with a wrong password (expect 401)
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "wrongpass"
+}
+
+### 5. Login (expect 200 and a token)
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "secret123"
+}
+
+### 6. Profile with the token (expect 200)
+@token = {{login.response.body.$.token}}
+
+GET {{baseUrl}}/profile
+Authorization: Bearer {{token}}
+
+### 7. Profile without a token (expect 401)
+GET {{baseUrl}}/profile
+
+### 8. Profile with an invalid token (expect 401)
+GET {{baseUrl}}/profile
+Authorization: Bearer this.is.not.a.valid.token
