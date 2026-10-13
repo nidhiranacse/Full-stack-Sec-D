@@ -1,0 +1,107 @@
+import { useState } from "react";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_COMMENT = 200;
+
+export default function FeedbackForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+  const [submitted, setSubmitted] = useState(false); // a submit has been attempted
+  const [successName, setSuccessName] = useState(null);
+
+  // Errors are derived from current values, so they disappear as soon as the field becomes valid
+  const errors = {
+    name: name.trim() === "",
+    email: !EMAIL_RE.test(email.trim()),
+    rating: rating === "",
+  };
+  const hasErrors = errors.name || errors.email || errors.rating;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    if (hasErrors) {
+      setSuccessName(null);
+      return;
+    }
+    setSuccessName(name.trim());
+    setName("");
+    setEmail("");
+    setRating("");
+    setComment("");
+    setSubmitted(false);
+  };
+
+  return (
+    <div>
+      <h2>Course Feedback</h2>
+      <form onSubmit={handleSubmit} noValidate>
+        <div>
+          <label htmlFor="name">Name</label>
+          <input
+            id="name"
+            data-testid="name-input"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {submitted && errors.name && (
+            <span data-testid="name-error" role="alert">Name is required</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            data-testid="email-input"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {submitted && errors.email && (
+            <span data-testid="email-error" role="alert">Enter a valid email address</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="rating">Rating</label>
+          <select
+            id="rating"
+            data-testid="rating-select"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+          >
+            <option value=""></option>
+            {[1, 2, 3, 4, 5].map((n) => (
+              <option key={n} value={String(n)}>{n}</option>
+            ))}
+          </select>
+          {submitted && errors.rating && (
+            <span data-testid="rating-error" role="alert">Please select a rating</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="comment">Comment</label>
+          <textarea
+            id="comment"
+            data-testid="comment-input"
+            value={comment}
+            maxLength={MAX_COMMENT}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <span data-testid="comment-count">{`${comment.length}/${MAX_COMMENT}`}</span>
+        </div>
+
+        <button type="submit" data-testid="submit-btn">Submit</button>
+      </form>
+
+      {successName !== null && (
+        <p data-testid="success-msg">{`Thank you, ${successName}! Feedback submitted.`}</p>
+      )}
+    </div>
+  );
+}
